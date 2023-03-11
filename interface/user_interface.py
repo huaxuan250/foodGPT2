@@ -10,6 +10,7 @@ from transformation.universal import to_new_steps, display_transformations
 from transformation.vegie_transform import if_meat_transform, if_vegie_transform, to_vegie_ingredients, to_meat_ingredients
 from transformation.healthy_transform import if_healthy_transform, if_unhealthy_transform, to_healthy_ingredients, to_unhealthy_ingredients, all_unhealthy_methods, all_healthy_methods
 from transformation.american_transform import if_american_transform, to_american_ingredients
+from transformation.scale_transform import *
 
 def construct_recipe(url):
   soup = get_soup(url)
@@ -117,6 +118,7 @@ def user_interaction():
       unhealthy_steps = to_new_steps(ori_steps, unhealthy_replacements)
       curr_steps = unhealthy_steps
     
+    # Checking if the user want to feel the AMERICAN patriotism
     elif if_american_transform(command):
       usa_igds, usa_replacements = to_american_ingredients(ori_items)
       usa_replacements.extend(all_unhealthy_methods())
@@ -127,5 +129,11 @@ def user_interaction():
       curr_items = usa_igds
       usa_steps = to_new_steps(ori_steps, usa_replacements)
       curr_steps = usa_steps
+    
+    # Check if the user want to scale the ingredients
+    elif if_mag(command):
+      mult = handle_mag(command)
+      scaled_igds = mult_ingredients(curr_items, mult)
+      curr_items = scaled_igds
     
 
