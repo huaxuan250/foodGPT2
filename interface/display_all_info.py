@@ -10,7 +10,7 @@ def handle_all_steps(command):
 def handle_all_ingredients(command):
   command = command.lower()
   intentions = ["show", "display", "see"]
-  if "ingredients" in command and "all" in command:
+  if "ingredient" in command and "all" in command:
     for intention in intentions:
       if intention in command:
         return True
