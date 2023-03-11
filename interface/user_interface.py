@@ -8,6 +8,7 @@ from interface.specific_query import *
 from interface.substitute_query import *
 from transformation.universal import to_new_steps, display_transformations
 from transformation.vegie_transform import if_meat_transform, if_vegie_transform, to_vegie_ingredients, to_meat_ingredients
+from transformation.healthy_transform import if_healthy_transform, if_unhealthy_transform, to_healthy_ingredients, to_unhealthy_ingredients, all_unhealthy_methods, all_healthy_methods
 
 def construct_recipe(url):
   soup = get_soup(url)
@@ -93,3 +94,25 @@ def user_interaction():
       curr_items = meat_igds
       meat_steps = to_new_steps(ori_steps, meat_replacements)
       curr_steps = meat_steps
+    
+    # Checking if this is about healthy transformation
+    elif if_healthy_transform(command):
+      healthy_igds, healthy_replacements = to_healthy_ingredients(ori_items)
+      healthy_replacements.extend(all_healthy_methods())
+
+      display_transformations(healthy_replacements)
+
+      curr_items = healthy_igds
+      healthy_steps = to_new_steps(ori_steps, healthy_replacements)
+      curr_steps = healthy_steps
+    
+    elif if_unhealthy_transform(command):
+      unhealthy_igds, unhealthy_replacements = to_unhealthy_ingredients(ori_items)
+      unhealthy_replacements.extend(all_unhealthy_methods())
+
+      display_transformations(unhealthy_replacements)
+
+      curr_items = unhealthy_igds
+      unhealthy_steps = to_new_steps(ori_steps, unhealthy_replacements)
+      curr_steps = unhealthy_steps
+

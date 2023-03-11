@@ -1,6 +1,5 @@
 from pyfood.utils import Shelf
-from ingredient_parser import parse_ingredient
-from transformation.universal import replace_original
+from transformation.universal import get_food_info, replace_original
 
 VEGIE = {
     'tofu' : ['beef', 'salmon', 'steak', 'ground turkey', 'pork', 'fish', 'trout', 'fillet', 'cod', 'halibut'],
@@ -21,13 +20,6 @@ def handle_seafood_name(name):
       if v in name:
         return k
 
-def get_food_info(igd):
-  info = parse_ingredient(igd)
-  quant = info['quantity']
-  unit = info['unit']
-  name = info['name']
-  combo = [quant, unit, name]
-  return combo
 
 def all_meat():
   shelf = Shelf()
