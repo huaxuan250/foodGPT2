@@ -9,6 +9,7 @@ from interface.substitute_query import *
 from transformation.universal import to_new_steps, display_transformations
 from transformation.vegie_transform import if_meat_transform, if_vegie_transform, to_vegie_ingredients, to_meat_ingredients
 from transformation.healthy_transform import if_healthy_transform, if_unhealthy_transform, to_healthy_ingredients, to_unhealthy_ingredients, all_unhealthy_methods, all_healthy_methods
+from transformation.american_transform import if_american_transform, to_american_ingredients
 
 def construct_recipe(url):
   soup = get_soup(url)
@@ -115,4 +116,16 @@ def user_interaction():
       curr_items = unhealthy_igds
       unhealthy_steps = to_new_steps(ori_steps, unhealthy_replacements)
       curr_steps = unhealthy_steps
+    
+    elif if_american_transform(command):
+      usa_igds, usa_replacements = to_american_ingredients(ori_items)
+      usa_replacements.extend(all_unhealthy_methods())
+
+      print("AMERICA! FUCK YEAH!")
+      display_transformations(usa_replacements)
+
+      curr_items = usa_igds
+      usa_steps = to_new_steps(ori_steps, usa_replacements)
+      curr_steps = usa_steps
+    
 
